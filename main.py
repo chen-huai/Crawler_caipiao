@@ -96,3 +96,13 @@ if __name__ == "__main__":
     print("后区出现频率最高的2个号码:")
     for num, count in top2_houqu:
         print(f"号码: {num}, 出现次数: {count}")
+
+    # 新增：统计出现频率最低的号码
+    low5_qianqu = qianqu_counter.most_common()[-5:]
+    low2_houqu = houqu_counter.most_common()[-2:]
+    print("前区出现频率最低的5个号码:")
+    for num, count in low5_qianqu:
+        print(f"号码: {num}, 出现次数: {count}")
+    print("后区出现频率最低的2个号码:")
+    for num, count in low2_houqu:
+        print(f"号码: {num}, 出现次数: {count}")
