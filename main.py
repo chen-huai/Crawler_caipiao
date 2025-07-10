@@ -106,3 +106,48 @@ if __name__ == "__main__":
     print("后区出现频率最低的2个号码:")
     for num, count in low2_houqu:
         print(f"号码: {num}, 出现次数: {count}")
+
+    # 前区和后区所有可能的号码
+    all_qianqu = {f"{i:02d}" for i in range(1, 36)}
+    all_houqu = {f"{i:02d}" for i in range(1, 13)}
+
+    # 已出现过的号码集合
+    appeared_qianqu = set(qianqu_nums)
+    appeared_houqu = set(houqu_nums)
+
+    # 没有出现过的号码
+    not_appeared_qianqu = sorted(all_qianqu - appeared_qianqu)
+    not_appeared_houqu = sorted(all_houqu - appeared_houqu)
+
+    print("历史数据中完全没有出现过的前区号码：", not_appeared_qianqu)
+    print("历史数据中完全没有出现过的后区号码：", not_appeared_houqu)
+
+    # 选热号
+    hot_qianqu = [num for num, _ in top5_qianqu]
+    hot_houqu = [num for num, _ in top2_houqu]
+    # 选冷号
+    cold_qianqu = [num for num, _ in low5_qianqu]
+    cold_houqu = [num for num, _ in low2_houqu]
+
+    # 混沌选号
+    chaos_qianqu = set()
+    if len(hot_qianqu) >= 2:
+        chaos_qianqu.update(random.sample(hot_qianqu, 2))
+    if len(cold_qianqu) >= 2:
+        chaos_qianqu.update(random.sample(cold_qianqu, 2))
+    if not_appeared_qianqu:
+        chaos_qianqu.add(random.choice(not_appeared_qianqu))
+    while len(chaos_qianqu) < 5:
+        chaos_qianqu.add(f"{random.randint(1,35):02d}")
+
+    chaos_houqu = set()
+    if hot_houqu:
+        chaos_houqu.add(random.choice(hot_houqu))
+    if not_appeared_houqu:
+        chaos_houqu.add(random.choice(not_appeared_houqu))
+    while len(chaos_houqu) < 2:
+        chaos_houqu.add(f"{random.randint(1,12):02d}")
+
+    print("混沌算法推荐：")
+    print("前区：", " ".join(sorted(chaos_qianqu)))
+    print("后区：", " ".join(sorted(chaos_houqu)))
